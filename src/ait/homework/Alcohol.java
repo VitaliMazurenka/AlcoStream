@@ -1,6 +1,8 @@
 package ait.homework;
 
-public class Alcohol {
+import java.util.Objects;
+
+public class Alcohol implements Comparable<Alcohol>{
     private String title;
     private double strength;
     private double price;
@@ -43,4 +45,34 @@ public class Alcohol {
                 ", price=" + price +
                 '}';
     }
+
+        @Override
+        public int compareTo(Alcohol o) {
+            return Double.compare(this.price,o.price);
+        }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Alcohol alcohol = (Alcohol) o;
+
+        if (Double.compare(alcohol.strength, strength) != 0) return false;
+        if (Double.compare(alcohol.price, price) != 0) return false;
+        return Objects.equals(title, alcohol.title);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = title != null ? title.hashCode() : 0;
+        temp = Double.doubleToLongBits(strength);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }
+
